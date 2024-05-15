@@ -176,8 +176,8 @@ class slow:
 			except KeyboardInterrupt:
 				break
 				sys.exit(cprint('[+] Attack canceled by user','red'))
-		print colored('We\'ve sent ','green') + colored(str(self.pkt_count),'cyan') + colored(' packets successfully. We\'re sleeping for ','green') + colored(self.sleep,'red') + colored(' seconds','green')
-		time.sleep(self.sleep)
+		print(colored('We\'ve sent ','green') + colored(str(self.pkt_count),'cyan') + colored(' packets successfully. We\'re sleeping for ','green') + colored(self.sleep,'red') + colored(' seconds','green')
+		time.sleep(self.sleep))
 
 class Requester(Thread):
 	def __init__(self,tgt):
@@ -239,7 +239,7 @@ class Requester(Thread):
 		except KeyboardInterrupt:
 			sys.exit(cprint('[+] Attack canceled by user','red'))
 		except Exception,e:
-			print e
+			print(e)
 		finally:
 			self.closeConnections()
 	def closeConnections(self):
@@ -377,7 +377,7 @@ Example:
 		synsock.setsockopt(IPPROTO_IP,IP_HDRINCL,1)
 		ts=[]
 		threads=[]
-		print colored('[*] SYN flood started on: ','blue')+colored(tgt,'red')
+		print(colored('[*] SYN flood started on: ','blue')+colored(tgt,'red'))
 		while 1:
 			if args.spoof == False:
 				args.fakeip = True
@@ -395,7 +395,7 @@ Example:
 	elif args.request:
 		tgt = args.target
 		threads = []
-		print colored('[*] Starting to send requests to: ','blue')+colored(tgt,'red')
+		print(colored('[*] Starting to send requests to: ','blue')+colored(tgt,'red'))
 		while 1:
 			try:
 				for x in xrange(int(args.threads)):
@@ -413,7 +413,7 @@ Example:
 			st = int(args.spoof)
 			threads = int(args.threads)
 		except Exception,e:
-			print '[+]',e
+			print('[+]',e)
 		while 1:
 			try:
 				worker=slow(tgt,port,to,threads,st)
