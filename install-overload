@@ -17,6 +17,8 @@
 #                     sudo ./install-overload.py                      #
 #_____________________________________________________________________#
 
+#THIS DOES NOT WORK
+
 import os, sys, time
 
 if os.name == 'posix':
