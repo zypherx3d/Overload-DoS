@@ -87,12 +87,6 @@ SLOW/Request/SYN spoofed IP attack method
 * [Termcolor](https://pypi.python.org/pypi/termcolor) - Used to generate text color
 
 
-
-## Authors
-
-* **Chris Poole**  -  Twitter: [@codingplanets](https://twitter.com/codingplanets)  -  Github: [/codingplanets](https://github.com/codingplanets)  -  Pastebin: [/1337ings](https://pastebin.com/u/1337ings)
-
-
 ## License
 
 This project is licensed under the MIT License
